@@ -3,7 +3,7 @@
 
 capture program drop gtools
 program gtools
-    version 13
+    version 12
     if ( inlist("`c(os)'", "MacOSX") | strpos("`c(machine_type)'", "Mac") ) local c_os_ macosx
     else local c_os_: di lower("`c(os)'")
 

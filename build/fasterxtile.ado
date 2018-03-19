@@ -4,7 +4,7 @@
 
 capture program drop fasterxtile
 program define fasterxtile
-    version 13
+    version 12
 
     if ( `=_N < 1' ) {
         error 2000

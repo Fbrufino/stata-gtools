@@ -3,7 +3,7 @@
 
 cap program drop gcontract
 program gcontract, rclass
-    version 13
+    version 12
 
     if ( `=_N' == 0 ) {
         di as err "no observations"

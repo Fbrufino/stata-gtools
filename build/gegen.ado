@@ -23,7 +23,7 @@
 
 capture program drop gegen
 program define gegen, byable(onecall) rclass
-    version 13
+    version 12
 
     local 00 `0'
     syntax anything(equalok) [if] [in] [aw fw iw pw], [by(str) *]

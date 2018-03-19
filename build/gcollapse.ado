@@ -3,7 +3,7 @@
 
 capture program drop gcollapse
 program gcollapse, rclass
-    version 13
+    version 12
     global GTOOLS_USER_VARABBREV `c(varabbrev)'
     local 00 `0'
 
@@ -422,7 +422,7 @@ program gcollapse, rclass
 
     mata: gtools_vars_mem = tokens("`memorder'")
     mata: gtools_pos      = gtools_vars :== gtools_targets
-    mata: gtools_io_order = selectindex(gtools_pos), selectindex(!gtools_pos)
+    mata: gtools_io_order = select(1..length(gtools_pos)+1,(gtools_pos,0)), select(1..length(gtools_pos)+1,(!gtools_pos,0))
 
     * First, make sure that the sources used as targets appear first
     mata: gtools_vars      = gtools_vars      [gtools_io_order]
@@ -437,7 +437,7 @@ program gcollapse, rclass
     mata: `k2'  = cols(gtools_vars)
     mata: `ord' = gtools_vars[1::`k1']
     mata: gtools_mem_order = J(1, 0, .)
-    mata: for(k = 1; k <= `k1'; k++) gtools_mem_order = gtools_mem_order, selectindex(gtools_vars_mem[k] :== `ord')
+    mata: for(k = 1; k <= `k1'; k++) gtools_mem_order = gtools_mem_order, select(1..length(gtools_vars_mem[k] :== `ord')+1,((gtools_vars_mem[k] :== `ord'),0))
     mata: gtools_mem_order = (`k2' > `k1')? gtools_mem_order, ((`k1' + 1)::`k2')': gtools_mem_order
     cap mata: mata drop `k'
     cap mata: mata drop `ord'
@@ -728,7 +728,7 @@ program gcollapse, rclass
         mata: st_local("invert", strofreal(sum(st_matrix("__gtools_invert"))))
         if ( `invert' ) {
             mata: st_numscalar("__gtools_first_inverted", ///
-                               selectindex(st_matrix("__gtools_invert"))[1])
+                               select(1..length(st_matrix("__gtools_invert"))+1,(st_matrix("__gtools_invert"),0))[1])
             if ( `=scalar(__gtools_first_inverted)' > 1 ) {
                 local sortvars ""
                 forvalues i = 1 / `=scalar(__gtools_first_inverted) - 1' {
