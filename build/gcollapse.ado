@@ -488,7 +488,7 @@ program gcollapse, rclass
         local plugvars `clean_by' `__gtools_gc_uniq_vars'
         local dropme `dropme' `:list memvars - keepvars'
         local dropme `:list dropme - plugvars'
-        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"'))
+        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"')[1::max((length(tokens(`"`dropme'"'))-1,0))])
 
         local gcollapse gcollapse(forceio, fname(`__gtools_gc_file'))
         local action    `action' fill(data) `unsorted'
@@ -504,7 +504,7 @@ program gcollapse, rclass
         local dropme `:list dropme  - plugvars'
 
         * Drop extra vars
-        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"'))
+        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"')[1::max((length(tokens(`"`dropme'"'))-1,0))])
         local msg `"Dropped superfluous variables"'
         gtools_timer info 97 `"`msg'"', prints(`bench')
 
@@ -549,7 +549,7 @@ program gcollapse, rclass
         if ( "`merge'" == "" ) local dropme `dropme' `:list memvars - keepvars'
         local dropme `:list dropme - plugvars'
 
-        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"'))
+        if ( "`dropme'" != "" ) mata: st_dropvar(tokens(`"`dropme'"')[1::max((length(tokens(`"`dropme'"'))-1,0))])
         local msg `"Dropped superfluous variables"'
         gtools_timer info 97 `"`msg'"', prints(`bench')
 
